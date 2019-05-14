@@ -1,0 +1,64 @@
+table {
+	border-collapse: collapse;
+}
+
+td {
+	text-align: center;
+	padding: 3px;
+	border: 1px solid DarkGreen;
+	font-family: "Consolas", "Menlo", monospace;
+	font-size: 12px;
+}
+
+button {
+	font: bold 10px sans-serif;
+}
+
+tr.row td:first-child {
+	height: 165px;
+}
+
+.active {
+	background-color: DarkSeaGreen;
+	color: Black;
+}
+
+.hide {
+	background-color: White;
+	color: White;
+}
+
+.rank-container {
+	width: 110px;
+	position: relative;
+	margin: 0 auto;
+}
+
+.rank {
+	cursor: pointer;
+	position: absolute;
+	left: 0;
+	font: bold 1.8em sans-serif;
+	padding: 5px 10px;
+	color: White;
+	text-shadow: -2px -2px 4px Black;
+}
+
+.points {
+	position: absolute;
+	right: 0;
+	font: 0.8em sans-serif;
+}
+
+.league {
+}
+
+.name {
+	margin: 14px 3px 6px 3px;
+	font-weight: bold;
+}
+
+.role {
+	font: 0.8em sans-serif;
+}
+
