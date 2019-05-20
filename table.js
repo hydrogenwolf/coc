@@ -168,10 +168,10 @@ function resetRow(tr) {
 function setFirstCell(data) {
 	var img = document.createElement("img");
 	img.className = "icon";
-	if (data.iconUrl)
+	if (data.townHall)
 	{
-		img.src = data.iconUrl;
-		img.alt = "Townhall Icon";
+		img.src = "http://coc.xor.kr/images/town-hall-" + data.townHall + ".png";
+		img.alt = "Townhall " + data.townHall;
 		img.height = 72;
 	}
 	else
@@ -448,7 +448,7 @@ $(document).ready(function() {
 	});
 
 	$.ajax({
-		url: "/jsonInit.php",
+		url: "/wsgi/set.py",
 		success: function(result) {
 			initSheet(result);
 		},
@@ -484,7 +484,7 @@ function refreshRows(mode = "")
 			resetRow(this);
 
 			$.ajax({
-				url: "/jsonRow.php?m=diff&t=" + this.id,
+				url: "/wsgi/row.py?m=diff&t=" + this.id,
 				success: function(result) {
 					refreshRow(result, mode);
 				},
