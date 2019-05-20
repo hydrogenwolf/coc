@@ -295,7 +295,35 @@ function refreshRow(data, mode) {
 
 	var placed = false;
 	var place = 0;
-	if (mode == "NEW") {
+	if (mode == "Inactive") {
+		var value = data.active;
+		for (var i = 0; i < tbody.rows.length; i++)
+		{
+			if (tbody.rows[i].className != "row")	continue;
+
+			var v = tbody.rows[i].getAttribute("active");
+			if (!v || value <= v)
+			{
+				place = i;
+				placed = true;
+				break;
+			}
+		}
+	} else if (mode == "Active") {
+		var value = data.active;
+		for (var i = 0; i < tbody.rows.length; i++)
+		{
+			if (tbody.rows[i].className != "row")	continue;
+
+			var v = tbody.rows[i].getAttribute("active");
+			if (!v || value >= v)
+			{
+				place = i;
+				placed = true;
+				break;
+			}
+		}
+	} else if (mode == "New") {
 		var value = data.count;
 		for (var i = 0; i < tbody.rows.length; i++)
 		{
@@ -309,28 +337,14 @@ function refreshRow(data, mode) {
 				break;
 			}
 		}
-	} else if (mode == "ACTIVE") {
-		var value = data.active;
+	} else if (mode == "Level") {
+		var value = data.expLevel;
 		for (var i = 0; i < tbody.rows.length; i++)
 		{
 			if (tbody.rows[i].className != "row")	continue;
 
-			var v = tbody.rows[i].getAttribute("active");
+			var v = tbody.rows[i].getAttribute("level");
 			if (!v || value >= v)
-			{
-				place = i;
-				placed = true;
-				break;
-			}
-		}
-	} else if (mode == "INACTIVE") {
-		var value = data.active;
-		for (var i = 0; i < tbody.rows.length; i++)
-		{
-			if (tbody.rows[i].className != "row")	continue;
-
-			var v = tbody.rows[i].getAttribute("active");
-			if (!v || value <= v)
 			{
 				place = i;
 				placed = true;
@@ -338,13 +352,13 @@ function refreshRow(data, mode) {
 			}
 		}
 	} else {
-		var value = data.trophies;
+		var value = Number(data.clanRank);
 		for (var i = 0; i < tbody.rows.length; i++)
 		{
 			if (tbody.rows[i].className != "row")	continue;
 
-			var v = tbody.rows[i].getAttribute("trophies");
-			if (!v || value >= v)
+			var v = Number(tbody.rows[i].getAttribute("rank"));
+			if (!v || value <= v)
 			{
 				place = i;
 				placed = true;
@@ -366,10 +380,10 @@ function refreshRow(data, mode) {
 	
 	tr0.id = tag;
 	tr0.className = "row";
+	tr0.setAttribute("rank", data.clanRank);
 	tr0.setAttribute("count", data.count);
 	tr0.setAttribute("active", data.active);
-	tr0.setAttribute("trophies", data.trophies);
-	tr0.setAttribute("rank", data.clanRank);
+	tr0.setAttribute("level", data.expLevel);
 	var td0 = setFirstCell(data);
 	tr0.appendChild(td0);
 
@@ -410,22 +424,27 @@ function refreshRow(data, mode) {
 $(document).ready(function() {
 	$("#clanrank").click(function() {
 		disableButtons();
-		refreshRows();
+		refreshRows($(this).text());
 	});
 
 	$("#active").click(function() {
 		disableButtons();
-		refreshRows("ACTIVE");
+		refreshRows($(this).text());
 	});
 
 	$("#inactive").click(function() {
 		disableButtons();
-		refreshRows("INACTIVE");
+		refreshRows($(this).text());
 	});
 
 	$("#new").click(function() {
 		disableButtons();
-		refreshRows("NEW");
+		refreshRows($(this).text());
+	});
+
+	$("#level").click(function() {
+		disableButtons();
+		refreshRows($(this).text());
 	});
 
 	$.ajax({
@@ -445,6 +464,7 @@ function disableButtons()
 	document.getElementById("active").disabled = true;
 	document.getElementById("inactive").disabled = true;
 	document.getElementById("new").disabled = true;
+	document.getElementById("level").disabled = true;
 }
 
 function enableButtons()
@@ -453,6 +473,7 @@ function enableButtons()
 	document.getElementById("active").disabled = false;
 	document.getElementById("inactive").disabled = false;
 	document.getElementById("new").disabled = false;
+	document.getElementById("level").disabled = false;
 }
 
 function refreshRows(mode = "")
