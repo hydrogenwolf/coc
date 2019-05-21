@@ -417,12 +417,13 @@ function refreshRow(data, mode) {
 
 	if(--refreshedRow <= 0)
 	{
+		refreshedRow = 0;
 		enableButtons();
 	}
 }
 
 $(document).ready(function() {
-	$("#clanrank").click(function() {
+	$("#default").click(function() {
 		disableButtons();
 		refreshRows($(this).text());
 	});
@@ -451,29 +452,24 @@ $(document).ready(function() {
 		url: "/wsgi/set.py",
 		success: function(result) {
 			initSheet(result);
-		},
-		error: function(xhr) {
-			console.log("Init Error");
 		}
 	});
 });
 
 function disableButtons()
 {
-	document.getElementById("clanrank").disabled = true;
-	document.getElementById("active").disabled = true;
-	document.getElementById("inactive").disabled = true;
-	document.getElementById("new").disabled = true;
-	document.getElementById("level").disabled = true;
+	$(".buttons button").each(function() {
+		//$(this).prop('disabled', true);
+		// jQuery와 JS를 섞어 써도 무방하다면 아래 코드가 좀더 명시적
+		this.disabled = true;
+	});
 }
 
 function enableButtons()
 {
-	document.getElementById("clanrank").disabled = false;
-	document.getElementById("active").disabled = false;
-	document.getElementById("inactive").disabled = false;
-	document.getElementById("new").disabled = false;
-	document.getElementById("level").disabled = false;
+	$(".buttons button").each(function() {
+		this.disabled = false;
+	});
 }
 
 function refreshRows(mode = "")
@@ -487,9 +483,6 @@ function refreshRows(mode = "")
 				url: "/wsgi/row.py?m=diff&t=" + this.id,
 				success: function(result) {
 					refreshRow(result, mode);
-				},
-				error: function(xhr) {
-					console.log("Refresh Rows Error");
 				}
 			});
 		};

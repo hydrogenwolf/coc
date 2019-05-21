@@ -5,7 +5,8 @@ import datetime
 
 import sys, os
 sys.path.append(os.path.dirname(__file__))
-import settings
+from settings import *
+#import settings
 import coc
 
 def application(environ, start_response):
@@ -17,11 +18,11 @@ def application(environ, start_response):
 	return [response]
 
 def sheet(tag):
-	db = sqlite3.connect(settings.db_path)
+	db = sqlite3.connect(Settings.db)
 	db.row_factory = sqlite3.Row
 
 	url = "https://api.clashofclans.com/v1/clans/" + urllib.quote_plus(tag)
-	result = coc.curl(url, settings.token)
+	result = coc.curl(url, Settings.token)
 
 	for i in range(len(result["memberList"])):
 		member = result["memberList"][i]

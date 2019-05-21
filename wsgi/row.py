@@ -6,7 +6,7 @@ import datetime
 
 import sys, os
 sys.path.append(os.path.dirname(__file__))
-import settings
+from settings import *
 import coc
 
 def application(environ, start_response):
@@ -22,7 +22,7 @@ def application(environ, start_response):
 
 def sheet(tag, mode):
 	url = "https://api.clashofclans.com/v1/players/" + urllib.quote_plus(tag)
-	result = coc.curl(url, settings.token)
+	result = coc.curl(url, Settings.token)
 
 	town_hall = str(result["townHallLevel"])
 	if "townHallWeaponLevel" in result:
@@ -51,7 +51,7 @@ def sheet(tag, mode):
 	row6 = ["OR"]
 	row7 = ["LV"]
 
-	db = sqlite3.connect(settings.db_path)
+	db = sqlite3.connect(Settings.db)
 	db.row_factory = sqlite3.Row
 
 	first_row = True
