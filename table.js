@@ -1,7 +1,7 @@
 
 var refreshedRow = 0;
 
-function initSheet(data) {
+function setSheet(data) {
 	if (!data.members)
 	{
 		if (data.message)	document.body.innerHTML = data.message;
@@ -302,7 +302,13 @@ function refreshRow(data, mode) {
 			if (tbody.rows[i].className != "row")	continue;
 
 			var v = tbody.rows[i].getAttribute("active");
-			if (!v || value <= v)
+			if (!v || value < v)
+			{
+				place = i;
+				placed = true;
+				break;
+			}
+			else if (value == v && data.count >= tbody.rows[i].getAttribute("count"))
 			{
 				place = i;
 				placed = true;
@@ -316,7 +322,13 @@ function refreshRow(data, mode) {
 			if (tbody.rows[i].className != "row")	continue;
 
 			var v = tbody.rows[i].getAttribute("active");
-			if (!v || value >= v)
+			if (!v || value > v)
+			{
+				place = i;
+				placed = true;
+				break;
+			}
+			else if (value == v && data.count <= tbody.rows[i].getAttribute("count"))
 			{
 				place = i;
 				placed = true;
@@ -344,7 +356,13 @@ function refreshRow(data, mode) {
 			if (tbody.rows[i].className != "row")	continue;
 
 			var v = tbody.rows[i].getAttribute("level");
-			if (!v || value >= v)
+			if (!v || value > v)
+			{
+				place = i;
+				placed = true;
+				break;
+			}
+			else if (value == v && data.townHall <= tbody.rows[i].getAttribute("townhall"))
 			{
 				place = i;
 				placed = true;
@@ -384,6 +402,7 @@ function refreshRow(data, mode) {
 	tr0.setAttribute("count", data.count);
 	tr0.setAttribute("active", data.active);
 	tr0.setAttribute("level", data.expLevel);
+	tr0.setAttribute("townhall", data.townHall);
 	var td0 = setFirstCell(data);
 	tr0.appendChild(td0);
 
@@ -423,27 +442,7 @@ function refreshRow(data, mode) {
 }
 
 $(document).ready(function() {
-	$("#default").click(function() {
-		disableButtons();
-		refreshRows($(this).text());
-	});
-
-	$("#active").click(function() {
-		disableButtons();
-		refreshRows($(this).text());
-	});
-
-	$("#inactive").click(function() {
-		disableButtons();
-		refreshRows($(this).text());
-	});
-
-	$("#new").click(function() {
-		disableButtons();
-		refreshRows($(this).text());
-	});
-
-	$("#level").click(function() {
+	$(".menu button").click(function() {
 		disableButtons();
 		refreshRows($(this).text());
 	});
@@ -451,14 +450,14 @@ $(document).ready(function() {
 	$.ajax({
 		url: "/wsgi/set.py",
 		success: function(result) {
-			initSheet(result);
+			setSheet(result);
 		}
 	});
 });
 
 function disableButtons()
 {
-	$(".buttons button").each(function() {
+	$(".menu button").each(function() {
 		//$(this).prop('disabled', true);
 		// jQuery와 JS를 섞어 써도 무방하다면 아래 코드가 좀더 명시적
 		this.disabled = true;
@@ -467,12 +466,12 @@ function disableButtons()
 
 function enableButtons()
 {
-	$(".buttons button").each(function() {
+	$(".menu button").each(function() {
 		this.disabled = false;
 	});
 }
 
-function refreshRows(mode = "")
+function refreshRows(mode)
 {
 	$("tr").each(function() {
 		if(this.className == "row") {

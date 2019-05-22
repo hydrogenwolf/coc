@@ -151,7 +151,7 @@ def sheet(tag, mode):
 		if dont_diff != 0:
 			active += 1
 		if recv_diff != 0:
-			active +=1
+			active += 1
 
 		count += 1
 

@@ -6,7 +6,6 @@ import datetime
 import sys, os
 sys.path.append(os.path.dirname(__file__))
 from settings import *
-#import settings
 import coc
 
 def application(environ, start_response):
