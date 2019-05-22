@@ -349,13 +349,13 @@ function refreshRow(data, mode) {
 				break;
 			}
 		}
-	} else if (mode == "Level") {
+	} else if (mode == "XP") {
 		var value = data.expLevel;
 		for (var i = 0; i < tbody.rows.length; i++)
 		{
 			if (tbody.rows[i].className != "row")	continue;
 
-			var v = tbody.rows[i].getAttribute("level");
+			var v = tbody.rows[i].getAttribute("exp");
 			if (!v || value > v)
 			{
 				place = i;
@@ -401,7 +401,7 @@ function refreshRow(data, mode) {
 	tr0.setAttribute("rank", data.clanRank);
 	tr0.setAttribute("count", data.count);
 	tr0.setAttribute("active", data.active);
-	tr0.setAttribute("level", data.expLevel);
+	tr0.setAttribute("exp", data.expLevel);
 	tr0.setAttribute("townhall", data.townHall);
 	var td0 = setFirstCell(data);
 	tr0.appendChild(td0);
