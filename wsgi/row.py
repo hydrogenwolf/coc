@@ -33,6 +33,7 @@ def sheet(tag, mode):
 
 	games_points = result["achievements"][31]["value"]
 	games_points_pre = result["achievements"][31]["value"]
+	games_stop = 0
 	
 	star = result["warStars"]
 	win0 = result["attackWins"]
@@ -67,7 +68,10 @@ def sheet(tag, mode):
 				WHERE tag = '%s' AND J.dt > DATE('now', '-40 days')
 				ORDER BY dt DESC""" % (coc.names_for_query, tag))
 	for row in cursor:
-		games_points_pre = row["achievement31"]
+		if games_stop < 15:
+				if games_points_pre == row["achievement31"]:
+						games_stop += 1
+				games_points_pre = row["achievement31"]
 
 		if first_row:
 			first_row = False
