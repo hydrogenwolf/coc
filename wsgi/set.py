@@ -45,13 +45,13 @@ def sheet(tag):
 		tag = member["tag"];
 		now = datetime.datetime.now()
 		cursor = db.cursor()
-		cursor.execute("""SELECT J.*, achievement3, achievement31, %s FROM journal AS J 
-					LEFT JOIN achievements AS A ON J.id = A.journal
-					LEFT JOIN heroes AS H ON J.id = H.journal
-					LEFT JOIN troops AS T ON J.id = T.journal
-					LEFT JOIN spells AS S ON J.id = S.journal
-					WHERE tag = '%s' AND J.dt > DATE('now', '-40 days')
-					ORDER BY dt DESC""" % (coc.names_for_query, tag))
+		cursor.execute("""SELECT J.*, achievement3, achievement12, achievement14, achievement23, achievement31, %s FROM journal AS J 
+							LEFT JOIN achievements AS A ON J.id = A.journal
+							LEFT JOIN heroes AS H ON J.id = H.journal
+							LEFT JOIN troops AS T ON J.id = T.journal
+							LEFT JOIN spells AS S ON J.id = S.journal
+							WHERE tag = '%s' AND J.dt > DATE('now', '-40 days')
+							ORDER BY dt DESC""" % (coc.names_for_query, tag))
 		for row in cursor:
 			now = datetime.datetime.strptime(row["dt"], "%Y-%m-%d %H:%M:%S")
 			now += datetime.timedelta(hours=9)
@@ -61,50 +61,44 @@ def sheet(tag):
 				first_row = False
 
 				star = row["war_stars"]
-				win0 = row["attack_wins"]
+				win0 = row["achievement12"]
 				win1 = row["versus_battle_wins"]
 				dont = row["troops_donated"]
+				care = row["achievement14"] + row["achievement23"]
 				recv = row["troops_received"]
 				tidy = row["achievement3"]
 				labs = coc.total_levels(row)
 			else:
 				star_diff = star - row["war_stars"]
-				win0_diff = win0 - row["attack_wins"]
+				win0_diff = win0 - row["achievement12"]
 				win1_diff = win1 - row["versus_battle_wins"]
 				dont_diff = dont - row["troops_donated"];
+				care_diff = care - (row["achievement14"] + row["achievement23"]);
 				recv_diff = recv - row["troops_received"];
 				tidy_diff = tidy - row["achievement3"];
 				labs_new = coc.total_levels(row)
 				labs_diff = labs - labs_new
 
-				if star_diff < 0:
-					star_diff = 0
-				if win0_diff < 0:
-					win0_diff = 0
-				if win1_diff < 0:
-					win1_diff = 0
-				if dont_diff < 0:
-					dont_diff = 0
 				if recv_diff < 0:
 					recv_diff = 0
-				if tidy_diff < 0:
-					tidy_diff = 0
-				if labs_diff < 0:
-					labs_diff = 0
 
 				row0.append(day_of_week)
 				row1.append(star_diff)
 				row2.append(win0_diff)
 				row3.append(win1_diff)
-				row4.append(dont_diff)
+				if dont_diff > 0:
+						row4.append(dont_diff)
+				else:
+						row4.append(care_diff)
 				row5.append(recv_diff)
 				row6.append(tidy_diff)
 				row7.append(labs_diff)
 
 				star = row["war_stars"]
-				win0 = row["attack_wins"]
+				win0 = row["achievement12"]
 				win1 = row["versus_battle_wins"]
 				dont = row["troops_donated"]
+				care = row["achievement14"] + row["achievement23"]
 				recv = row["troops_received"]
 				tidy = row["achievement3"]
 				labs = labs_new
