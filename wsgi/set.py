@@ -86,7 +86,7 @@ def sheet(tag):
 				row1.append(star_diff)
 				row2.append(win0_diff)
 				row3.append(win1_diff)
-				if dont_diff > 0:
+				if dont_diff >= care_diff:
 						row4.append(dont_diff)
 				else:
 						row4.append(care_diff)
