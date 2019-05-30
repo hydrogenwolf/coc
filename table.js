@@ -441,7 +441,45 @@ function refreshRow(data, mode) {
 	}
 }
 
+function getCookie(cname) {
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+}
+
+function setCookie(cookie) {
+	var date = new Date();
+	date.setTime(date.getTime() + (365*(24*60*60*1000)));
+	document.cookie = cookie + "; expires=" + date.toUTCString();
+}
+
+function addStyle(style) { 
+	var sheet = document.styleSheets[0];
+	sheet.insertRule(style, sheet.cssRules.length);
+} 
+
 $(document).ready(function() {
+	var color = getCookie("color");
+	if (color) {
+		addStyle(".active { background-color:" + color + " }");
+		document.getElementById("color").value = color;
+	}
+
+	$("#color").change(function() {
+		addStyle(".active { background-color:" + this.value + " }");
+		setCookie("color=" + this.value);
+	});
+
 	$(".menu button").click(function() {
 		disableButtons();
 		refreshRows($(this).text());
@@ -487,3 +525,4 @@ function refreshRows(mode)
 		};
 	});
 }
+

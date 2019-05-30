@@ -2,7 +2,20 @@ table {
 	border-collapse: collapse;
 }
 
-td {
+.menu {
+	margin-bottom: 12px;
+}
+
+.menu input[type=color] {
+	margin-right: 12px;
+}
+
+.menu button {
+	font-size: 11px;
+	width: 90px;
+}
+
+#sheet td {
 	text-align: center;
 	padding: 3px;
 	border: 1px solid DarkGreen;
@@ -10,11 +23,7 @@ td {
 	font-size: 12px;
 }
 
-button {
-	font: bold 10px sans-serif;
-}
-
-tr.row td:first-child {
+#sheet tr.row td:first-child {
 	height: 165px;
 }
 
@@ -60,8 +69,4 @@ tr.row td:first-child {
 
 .role {
 	font: 0.8em sans-serif;
-}
-
-.menu button {
-	width: 100px;
 }
