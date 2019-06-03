@@ -23,6 +23,9 @@ def sheet(tag):
 	url = "https://api.clashofclans.com/v1/clans/" + urllib.quote_plus(tag)
 	result = coc.curl(url, Settings.token)
 
+	if "memberList" not in result:
+		return result
+
 	for i in range(len(result["memberList"])):
 		member = result["memberList"][i]
 
