@@ -69,8 +69,8 @@ def sheet(tag, mode):
 						WHERE tag = '%s' AND J.dt > DATE('now', '-40 days')
 						ORDER BY dt DESC""" % (coc.names_for_query, tag))
 	for row in cursor:
-		if games_stop < 15:
-				if games_points_pre == row["achievement31"]:
+		if games_stop < 20:
+				if games_points != games_points_pre and games_points_pre == row["achievement31"]:
 						games_stop += 1
 				games_points_pre = row["achievement31"]
 
