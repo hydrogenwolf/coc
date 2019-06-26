@@ -315,26 +315,6 @@ function refreshRow(data, mode) {
 				break;
 			}
 		}
-	} else if (mode == "Active") {
-		var value = data.active;
-		for (var i = 0; i < tbody.rows.length; i++)
-		{
-			if (tbody.rows[i].className != "row")	continue;
-
-			var v = tbody.rows[i].getAttribute("active");
-			if (!v || value > v)
-			{
-				place = i;
-				placed = true;
-				break;
-			}
-			else if (value == v && data.count <= tbody.rows[i].getAttribute("count"))
-			{
-				place = i;
-				placed = true;
-				break;
-			}
-		}
 	} else if (mode == "New") {
 		var value = data.count;
 		for (var i = 0; i < tbody.rows.length; i++)
@@ -349,7 +329,7 @@ function refreshRow(data, mode) {
 				break;
 			}
 		}
-	} else if (mode == "XP") {
+	} else if (mode == "Exp") {
 		var value = data.expLevel;
 		for (var i = 0; i < tbody.rows.length; i++)
 		{
@@ -363,6 +343,20 @@ function refreshRow(data, mode) {
 				break;
 			}
 			else if (value == v && data.townHall <= tbody.rows[i].getAttribute("townhall"))
+			{
+				place = i;
+				placed = true;
+				break;
+			}
+		}
+	} else if (mode == "Raid") {
+		var value = data.attackWins;
+		for (var i = 0; i < tbody.rows.length; i++)
+		{
+			if (tbody.rows[i].className != "row")	continue;
+
+			var v = tbody.rows[i].getAttribute("raid");
+			if (!v || value >= v)
 			{
 				place = i;
 				placed = true;
@@ -403,6 +397,7 @@ function refreshRow(data, mode) {
 	tr0.setAttribute("active", data.active);
 	tr0.setAttribute("exp", data.expLevel);
 	tr0.setAttribute("townhall", data.townHall);
+	tr0.setAttribute("raid", data.attackWins);
 	var td0 = setFirstCell(data);
 	tr0.appendChild(td0);
 
