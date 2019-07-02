@@ -18,7 +18,7 @@ function setSheet(data) {
 		var member = data.memberList[i];
 		var tag = member.tag.substring(1);
 		
-		var td0 = setFirstCell(member);
+		var td0 = setFirstCell(member, "");
 		var tr0 = document.createElement("tr");
 		tr0.id = tag;
 		tr0.className = "row";
@@ -165,7 +165,7 @@ function resetRow(tr) {
 	trs[0].cells[0].rowSpan = "1";
 }
 
-function setFirstCell(data) {
+function setFirstCell(data, mode) {
 	var img = document.createElement("img");
 	img.className = "icon";
 	if (data.townHall)
@@ -185,8 +185,19 @@ function setFirstCell(data) {
 	var divRank = document.createElement("div");
 	divRank.className = "rank";
 	divRank.addEventListener("click", clickRank);
-	if(data.clanRank)
+	if (mode == "Exp")
+	{
+		divRank.innerHTML = data.expLevel;
+	}
+	else if (mode == "Raid")
+	{
+		divRank.innerHTML = data.attackWins;
+	}
+	else
+	{
 		divRank.innerHTML = data.clanRank;
+	}
+
 	var divGamesPoints = document.createElement("div");
 	divGamesPoints.className = "points";
 	if(data.gamesPoints)
@@ -398,7 +409,7 @@ function refreshRow(data, mode) {
 	tr0.setAttribute("exp", data.expLevel);
 	tr0.setAttribute("townhall", data.townHall);
 	tr0.setAttribute("raid", data.attackWins);
-	var td0 = setFirstCell(data);
+	var td0 = setFirstCell(data, mode);
 	tr0.appendChild(td0);
 
 	var tr1 = document.createElement("tr");
