@@ -33,6 +33,7 @@ def sheet(tag, mode):
 
 	games_points = result["achievements"][31]["value"]
 	games_points_pre = result["achievements"][31]["value"]
+	games_points_visible = True
 	
 	star = result["warStars"]
 	win0 = result["achievements"][12]["value"]
@@ -68,7 +69,9 @@ def sheet(tag, mode):
 						WHERE tag = '%s' AND J.dt > DATE('now', '-40 days')
 						ORDER BY dt DESC""" % (coc.names_for_query, tag))
 	for row in cursor:
-		if count < 40:
+		if count > 30 and games_points == games_points_pre:
+			games_points_visible = False
+		elif count < 40:
 			games_points_pre = row["achievement31"]
 
 		if first_row:
@@ -159,7 +162,8 @@ def sheet(tag, mode):
 	result["row6"] = row6
 	result["row7"] = row7
 	result["townHall"] = town_hall
-	result["gamesPoints"] = games_points - games_points_pre
+	if games_points_visible == True:
+			result["gamesPoints"] = games_points - games_points_pre
 	result["count"] = count
 	result["active"] = active / count
 
