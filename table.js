@@ -213,9 +213,13 @@ function setFirstCell(data, mode) {
 	divRankContainer.appendChild(divGamesPoints);
 	divRankContainer.appendChild(divLeague);
 	var txtName = document.createTextNode(data.name);
+	var linkName = document.createElement("a");
+	linkName.appendChild(txtName);
+	linkName.href = "https://www.clashofstats.com/players/" + data.tag.substring(1) + "/achievements";
+	linkName.target = "_blank";
 	var divName = document.createElement("div");
 	divName.className = "name";
-	divName.appendChild(txtName);
+	divName.appendChild(linkName);
 	var divRole = document.createElement("div");
 	divRole.className = "role";
 	divRole.innerHTML = data.role;

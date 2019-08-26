@@ -67,6 +67,11 @@ table {
 	font-weight: bold;
 }
 
+.name a {
+	text-decoration: none;
+	color: inherit;
+}
+
 .role {
 	font: 0.8em sans-serif;
 }
