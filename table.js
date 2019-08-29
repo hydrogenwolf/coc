@@ -202,10 +202,8 @@ function setFirstCell(data, mode) {
 	divGamesPoints.className = "points";
 	if(data.gamesPoints)
 	{
-		var points = parseInt(data.gamesPoints);
 	
-		if (points > 4000)	points = 4000;
-		divGamesPoints.innerHTML = points;
+		divGamesPoints.innerHTML = parseInt(data.gamesPoints);
 	}
 	var divRankContainer = document.createElement("div");
 	divRankContainer.className = "rank-container";
