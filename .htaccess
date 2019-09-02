@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-	RewriteRule ^$ clan/
+	RewriteRule ^$ table/
 	RewriteRule ^clan/?([A-Za-z0-9]*)$ clan.php?t=$1 [L]
 	RewriteRule ^player/?([A-Za-z0-9]*)$ player.php?t=$1 [L]
 	RewriteRule ^table/?([A-Za-z0-9]*)$ table.html?t=$1 [L]
