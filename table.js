@@ -170,7 +170,7 @@ function setFirstCell(data, mode) {
 	img.className = "icon";
 	if (data.townHall)
 	{
-		img.src = "http://coc.xor.kr/images/town-hall-" + data.townHall + ".png";
+		img.src = "images/town-hall-" + data.townHall + ".png";
 		img.alt = "Townhall " + data.townHall;
 		img.height = 72;
 	}
