@@ -184,25 +184,25 @@ function setFirstCell(data, mode) {
 	divLeague.appendChild(img);
 	var divRank = document.createElement("div");
 	divRank.className = "rank";
-	divRank.addEventListener("click", clickRank);
+	var txtName = document.createTextNode(data.clanRank);
 	if (mode == "Exp")
 	{
-		divRank.innerHTML = data.expLevel;
+		txtName = document.createTextNode(data.expLevel);
 	}
 	else if (mode == "Raid")
 	{
-		divRank.innerHTML = data.attackWins;
+		txtName = document.createTextNode(data.attackWins);
 	}
-	else
-	{
-		divRank.innerHTML = data.clanRank;
-	}
+	var externalLink = document.createElement("a");
+	externalLink.appendChild(txtName);
+	externalLink.href = "https://www.clashofstats.com/players/" + data.tag.substring(1);
+	externalLink.target = "_blank";
+	divRank.appendChild(externalLink);
 
 	var divGamesPoints = document.createElement("div");
 	divGamesPoints.className = "points";
 	if(data.gamesPoints)
 	{
-	
 		divGamesPoints.innerHTML = parseInt(data.gamesPoints);
 	}
 	var divRankContainer = document.createElement("div");
@@ -211,13 +211,9 @@ function setFirstCell(data, mode) {
 	divRankContainer.appendChild(divGamesPoints);
 	divRankContainer.appendChild(divLeague);
 	var txtName = document.createTextNode(data.name);
-	var linkName = document.createElement("a");
-	linkName.appendChild(txtName);
-	linkName.href = "https://www.clashofstats.com/players/" + data.tag.substring(1) + "/achievements";
-	linkName.target = "_blank";
 	var divName = document.createElement("div");
 	divName.className = "name";
-	divName.appendChild(linkName);
+	divName.appendChild(txtName);
 	var divRole = document.createElement("div");
 	divRole.className = "role";
 	divRole.innerHTML = data.role;

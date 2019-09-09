@@ -47,7 +47,7 @@ table {
 	cursor: pointer;
 	position: absolute;
 	left: 0;
-	font: bold 1.8em sans-serif;
+	font: bold 2em sans-serif;
 	padding: 5px 10px;
 	color: White;
 	text-shadow: -2px -2px 4px Black;
@@ -63,11 +63,12 @@ table {
 }
 
 .name {
-	margin: 14px 3px 6px 3px;
+	margin: 20px 3px 14px 3px;
+	font-size: 1.1em;
 	font-weight: bold;
 }
 
-.name a {
+.rank a {
 	text-decoration: none;
 	color: inherit;
 }
