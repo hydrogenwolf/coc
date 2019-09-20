@@ -184,18 +184,19 @@ function setFirstCell(data, mode) {
 	divLeague.appendChild(img);
 	var divRank = document.createElement("div");
 	divRank.className = "rank";
-	var txtName = document.createTextNode(data.clanRank);
+	var rank = document.createTextNode(data.clanRank);
 	if (mode == "Exp")
 	{
-		txtName = document.createTextNode(data.expLevel);
+		rank = document.createTextNode(data.expLevel);
 	}
 	else if (mode == "Raid")
 	{
-		txtName = document.createTextNode(data.attackWins);
+		rank = document.createTextNode(data.attackWins);
 	}
 	var externalLink = document.createElement("a");
-	externalLink.appendChild(txtName);
+	externalLink.appendChild(rank);
 	externalLink.href = "https://www.clashofstats.com/players/" + data.tag.substring(1);
+	//externalLink.href = "https://clashspot.net/en/player/" + data.tag.substring(1) + "/view";
 	externalLink.target = "_blank";
 	divRank.appendChild(externalLink);
 
@@ -372,6 +373,20 @@ function refreshRow(data, mode) {
 				break;
 			}
 		}
+	} else if (mode == "Games") {
+		var value = data.gamesPoints;
+		for (var i = 0; i < tbody.rows.length; i++)
+		{
+			if (tbody.rows[i].className != "row")	continue;
+
+			var v = tbody.rows[i].getAttribute("games");
+			if (!v || value >= v)
+			{
+				place = i;
+				placed = true;
+				break;
+			}
+		}
 	} else {
 		var value = Number(data.clanRank);
 		for (var i = 0; i < tbody.rows.length; i++)
@@ -407,6 +422,7 @@ function refreshRow(data, mode) {
 	tr0.setAttribute("exp", data.expLevel);
 	tr0.setAttribute("townhall", data.townHall);
 	tr0.setAttribute("raid", data.attackWins);
+	tr0.setAttribute("games", data.gamesPoints);
 	var td0 = setFirstCell(data, mode);
 	tr0.appendChild(td0);
 

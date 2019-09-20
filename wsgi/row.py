@@ -66,7 +66,7 @@ def sheet(tag, mode):
 						LEFT JOIN heroes AS H ON J.id = H.journal
 						LEFT JOIN troops AS T ON J.id = T.journal
 						LEFT JOIN spells AS S ON J.id = S.journal
-						WHERE tag = '%s' AND J.dt > DATE('now', '-40 days')
+						WHERE tag = '%s' AND J.dt > DATE('now', '-30 days')
 						ORDER BY dt DESC""" % (coc.names_for_query, tag))
 	for row in cursor:
 		if count > 30 and games_points == games_points_pre:
@@ -164,6 +164,8 @@ def sheet(tag, mode):
 	result["townHall"] = town_hall
 	if games_points_visible == True:
 			result["gamesPoints"] = games_points - games_points_pre
+        else:
+			result["gamesPoints"] = games_points
 	result["count"] = count
 	result["active"] = active / count
 
