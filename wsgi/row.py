@@ -164,8 +164,10 @@ def sheet(tag, mode):
 	result["townHall"] = town_hall
 	if games_points_visible == True:
 			result["gamesPoints"] = games_points - games_points_pre
+        '''
         else:
 			result["gamesPoints"] = games_points
+        '''
 	result["count"] = count
 	result["active"] = active / count
 

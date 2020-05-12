@@ -305,6 +305,9 @@ function refreshRow(data, mode) {
 
 	var placed = false;
 	var place = 0;
+	var gamesPoints = 0
+	if (typeof data.gamesPoints != 'undefined')	gamesPoints = data.gamesPoints;
+
 	if (mode == "Inactive") {
 		var value = data.active;
 		for (var i = 0; i < tbody.rows.length; i++)
@@ -374,13 +377,12 @@ function refreshRow(data, mode) {
 			}
 		}
 	} else if (mode == "Games") {
-		var value = data.gamesPoints;
 		for (var i = 0; i < tbody.rows.length; i++)
 		{
 			if (tbody.rows[i].className != "row")	continue;
 
 			var v = tbody.rows[i].getAttribute("games");
-			if (!v || value >= v)
+			if (!v || gamesPoints >= v)
 			{
 				place = i;
 				placed = true;
@@ -422,7 +424,7 @@ function refreshRow(data, mode) {
 	tr0.setAttribute("exp", data.expLevel);
 	tr0.setAttribute("townhall", data.townHall);
 	tr0.setAttribute("raid", data.attackWins);
-	tr0.setAttribute("games", data.gamesPoints);
+	tr0.setAttribute("games", gamesPoints);
 	var td0 = setFirstCell(data, mode);
 	tr0.appendChild(td0);
 

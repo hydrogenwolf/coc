@@ -73,19 +73,16 @@ def total_levels(data):
 def total_levels_raw(data):
 	total = 0
 	for hero in data["heroes"]:
-		if hero["village"] != "home":
-			continue
-		total += hero["level"]
+		if hero["village"] == "home" and hero["name"] in hero_names:
+                    total += hero["level"]
 
 	for spell in data["spells"]:
-		if spell["village"] != "home":
-			continue
-		total += spell["level"]
+		if spell["village"] == "home" and spell["name"] in spell_names:
+                    total += spell["level"]
 
 	for troop in data["troops"]:
-		if troop["village"] != "home":
-			continue
-		total += troop["level"]
+		if troop["village"] == "home" and troop["name"] in troop_names:
+                    total += troop["level"]
 
 	return total
 
